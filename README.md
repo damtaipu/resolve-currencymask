@@ -1,18 +1,18 @@
-# ngx-currency
+# resolve-currencymask
 
-[![npm version](https://badge.fury.io/js/ngx-currency.png)](http://badge.fury.io/js/ngx-currency)
-[![GitHub issues](https://img.shields.io/github/issues/nbfontana/ngx-currency.png)](https://github.com/nbfontana/ngx-currency/issues)
-[![GitHub stars](https://img.shields.io/github/stars/nbfontana/ngx-currency.png)](https://github.com/nbfontana/ngx-currency/stargazers)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.png)](https://raw.githubusercontent.com/nbfontana/ngx-currency/master/LICENSE)
+[![npm version](https://badge.fury.io/js/resolve-currencymask.png)](http://badge.fury.io/js/resolve-currencymask)
+[![GitHub issues](https://img.shields.io/github/issues/nbfontana/resolve-currencymask.png)](https://github.com/nbfontana/resolve-currencymask/issues)
+[![GitHub stars](https://img.shields.io/github/stars/nbfontana/resolve-currencymask.png)](https://github.com/nbfontana/resolve-currencymask/stargazers)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.png)](https://raw.githubusercontent.com/nbfontana/resolve-currencymask/master/LICENSE)
 
 ## Demo
 
-https://nbfontana.github.io/ngx-currency/
+https://nbfontana.github.io/resolve-currencymask/
 
 ## Table of contents
 
 - [Getting Started](#getting-started)
-- [Documentation](https://nbfontana.github.io/ngx-currency/docs/)
+- [Documentation](https://nbfontana.github.io/resolve-currencymask/docs/)
 - [Development](#development)
 - [License](#license)
 
@@ -23,18 +23,18 @@ https://nbfontana.github.io/ngx-currency/
 Install the package by command:
 
 ```sh
-npm install ngx-currency --save
+npm install resolve-currencymask --save
 ```
 
 Import the directive
 
 ```ts
-import { NgxCurrencyDirective } from "ngx-currency";
+import { ResolveCurrencyMaskDirective } from "resolve-currencymask";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  imports: [NgxCurrencyDirective],
+  imports: [ResolveCurrencyMaskDirective],
 })
 export class AppComponent {}
 ```
@@ -42,7 +42,7 @@ export class AppComponent {}
 ### Using
 
 ```html
-<input type="text" inputmode="decimal" currencyMask formControlName="value" />
+<input type="text" inputmode="decimal" resolveCurrencyMask formControlName="value" />
 ```
 
 - `ngModel` An attribute of type number. If is displayed `'$ 25.63'`, the attribute will be `'25.63'`.
@@ -53,7 +53,7 @@ You can set options...
 
 ```html
 <!-- example for pt-BR money -->
-<input [currencyMask]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" formControlName="value" />
+<input [resolveCurrencyMask]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" formControlName="value" />
 ```
 
 Available options:
@@ -88,12 +88,12 @@ Input Modes:
 You can also set options globally...
 
 ```ts
-import { provideEnvironmentNgxCurrency, NgxCurrencyInputMode } from 'ngx-currency';
+import { provideEnvironmentResolveCurrencyMask, ResolveCurrencyMaskInputMode } from 'resolve-currencymask';
 
 bootstrapApplication(AppComponent, {
   providers: [
     ...
-    provideEnvironmentNgxCurrency({
+    provideEnvironmentResolveCurrencyMask({
       align: "right",
       allowNegative: true,
       allowZero: true,
@@ -105,7 +105,7 @@ bootstrapApplication(AppComponent, {
       nullable: true,
       min: null,
       max: null,
-      inputMode: NgxCurrencyInputMode.Financial,
+      inputMode: ResolveCurrencyMaskInputMode.Financial,
     }),
     ...
   ],
