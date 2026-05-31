@@ -1,39 +1,44 @@
 import { JsonPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import {
-  NgxCurrencyDirective,
-  NgxCurrencyInputMode,
-} from '../../projects/ngx-currency/src/public-api';
+  ResolveCurrencyMaskDirective,
+  ResolveCurrencyMaskInputMode,
+} from '../../projects/resolve-currencymask/src/public-api';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  imports: [ReactiveFormsModule, JsonPipe, NgxCurrencyDirective],
+  imports: [ReactiveFormsModule, JsonPipe, ResolveCurrencyMaskDirective],
 })
 export class AppComponent {
-  ngxCurrencyOptions = {
+  protected readonly resolveCurrencyMaskOptions = signal({
     prefix: 'R$ ',
     thousands: '.',
     decimal: ',',
     allowNegative: true,
     nullable: true,
     max: 250_000_000,
-    inputMode: NgxCurrencyInputMode.Financial,
-  };
-  ngxCurrencyInputMode = NgxCurrencyInputMode;
+    inputMode: ResolveCurrencyMaskInputMode.Financial,
+  });
 
-  form = this.formBuilder.nonNullable.group({
+  protected readonly resolveCurrencyMaskInputMode =
+    ResolveCurrencyMaskInputMode;
+
+  protected readonly form = this.formBuilder.nonNullable.group({
     value: 0,
-    inputMode: this.ngxCurrencyOptions.inputMode,
+    inputMode: this.resolveCurrencyMaskOptions().inputMode,
   });
 
   constructor(private readonly formBuilder: FormBuilder) {
-    this.form.controls.inputMode.valueChanges.subscribe(val => {
-      this.ngxCurrencyOptions.inputMode = val;
+    this.form.controls.inputMode.valueChanges.subscribe(inputMode => {
+      this.resolveCurrencyMaskOptions.update(options => ({
+        ...options,
+        inputMode,
+      }));
 
-      // Clear the value input when the input mode is changed.container
+      // Clear the value input when the input mode is changed.
       this.form.patchValue({ value: 0 });
     });
   }

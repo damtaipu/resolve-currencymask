@@ -1,8 +1,11 @@
 import { InputService } from './input.service';
-import { NgxCurrencyConfig, NgxCurrencyInputMode } from './ngx-currency.config';
+import {
+  ResolveCurrencyMaskConfig,
+  ResolveCurrencyMaskInputMode,
+} from './resolve-currencymask.config';
 
-describe('NgxCurrencyConfig', () => {
-  let globalOptions: NgxCurrencyConfig;
+describe('ResolveCurrencyMaskConfig', () => {
+  let globalOptions: ResolveCurrencyMaskConfig;
   let inputService: InputService;
 
   beforeEach(() => {
@@ -16,7 +19,7 @@ describe('NgxCurrencyConfig', () => {
       suffix: '',
       thousands: '.',
       nullable: false,
-      inputMode: NgxCurrencyInputMode.Financial,
+      inputMode: ResolveCurrencyMaskInputMode.Financial,
     };
 
     inputService = new InputService(null!, globalOptions);

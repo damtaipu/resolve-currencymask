@@ -1,4 +1,7 @@
-<a href="https://github.com/nbfontana/ngx-currency" class="d-none d-sm-block">
+<a
+  href="https://github.com/nbfontana/resolve-currencymask"
+  class="d-none d-sm-block"
+>
   <img
     decoding="async"
     width="149"
@@ -12,7 +15,7 @@
 
 <nav class="navbar navbar-expand bg-light">
   <div class="container">
-    <a class="navbar-brand" href="/">NgxCurrency</a>
+    <a class="navbar-brand" href="/">ResolveCurrencyMask</a>
 
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item">
@@ -22,7 +25,7 @@
         <a
           class="nav-link"
           target="_blank"
-          href="https://github.com/nbfontana/ngx-currency#installing-and-importing"
+          href="https://github.com/nbfontana/resolve-currencymask#installing-and-importing"
         >
           Installation
         </a>
@@ -31,7 +34,7 @@
         <a
           class="nav-link"
           target="_blank"
-          href="https://nbfontana.github.io/ngx-currency/docs/"
+          href="https://nbfontana.github.io/resolve-currencymask/docs/"
         >
           Documentation
         </a>
@@ -53,7 +56,7 @@
           autofocus
           placeholder="R$ 0,00"
           formControlName="value"
-          [currencyMask]="ngxCurrencyOptions"
+          [resolveCurrencyMask]="resolveCurrencyMaskOptions()"
         />
       </div>
     </div>
@@ -68,7 +71,7 @@
                 type="radio"
                 name="inputMode"
                 formControlName="inputMode"
-                [value]="ngxCurrencyInputMode.Financial"
+                [value]="resolveCurrencyMaskInputMode.Financial"
               />
               Financial
             </label>
@@ -80,7 +83,7 @@
                 type="radio"
                 name="inputMode"
                 formControlName="inputMode"
-                [value]="ngxCurrencyInputMode.Natural"
+                [value]="resolveCurrencyMaskInputMode.Natural"
               />
               Natural
             </label>
