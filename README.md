@@ -1,99 +1,88 @@
-# ngx-currency
+# resolve-currencymask
 
-[![npm version](https://badge.fury.io/js/ngx-currency.png)](http://badge.fury.io/js/ngx-currency)
-[![GitHub issues](https://img.shields.io/github/issues/nbfontana/ngx-currency.png)](https://github.com/nbfontana/ngx-currency/issues)
-[![GitHub stars](https://img.shields.io/github/stars/nbfontana/ngx-currency.png)](https://github.com/nbfontana/ngx-currency/stargazers)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.png)](https://raw.githubusercontent.com/nbfontana/ngx-currency/master/LICENSE)
+[![npm version](https://badge.fury.io/js/resolve-currencymask.png)](http://badge.fury.io/js/resolve-currencymask)
+[![GitHub issues](https://img.shields.io/github/issues/damtaipu/resolve-currencymask.png)](https://github.com/damtaipu/resolve-currencymask/issues)
+[![GitHub stars](https://img.shields.io/github/stars/damtaipu/resolve-currencymask.png)](https://github.com/damtaipu/resolve-currencymask/stargazers)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.png)](https://raw.githubusercontent.com/damtaipu/resolve-currencymask/master/LICENSE)
 
-## Demo
+`resolve-currencymask` é uma diretiva standalone para Angular que aplica máscara monetária em campos `<input>` e mantém o valor do formulário como número.
 
-https://nbfontana.github.io/ngx-currency/
+Ela é indicada para cenários como:
 
-## Table of contents
+- campos de preço, valor, saldo ou limite;
+- formulários reativos (`ReactiveFormsModule`);
+- aplicações Angular que precisam de configuração local ou global de máscara;
+- formatos monetários internacionais, como `R$ 1.234,56` ou `$ 1,234.56`.
 
-- [Getting Started](#getting-started)
-- [Documentation](https://nbfontana.github.io/ngx-currency/docs/)
-- [Development](#development)
-- [License](#license)
+## Compatibilidade
 
-## Getting Started
+| Pacote     | Versão suportada |
+| ---------- | ---------------- |
+| Angular    | `^21.0.0`        |
+| RxJS       | `~7.8.1`         |
+| TypeScript | `~5.9.3`         |
 
-### Installing and Importing
+## Instalação
 
-Install the package by command:
-
-```sh
-npm install ngx-currency --save
+```bash
+npm install resolve-currencymask --save
 ```
 
-Import the directive
+## Uso rápido
+
+Importe a diretiva no componente standalone em que o input será usado:
 
 ```ts
-import { NgxCurrencyDirective } from "ngx-currency";
+import { Component } from "@angular/core";
+import { ReactiveFormsModule } from "@angular/forms";
+import { ResolveCurrencyMaskDirective } from "resolve-currencymask";
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  imports: [NgxCurrencyDirective],
+  selector: "app-payment-form",
+  templateUrl: "./payment-form.component.html",
+  imports: [ReactiveFormsModule, ResolveCurrencyMaskDirective],
 })
-export class AppComponent {}
+export class PaymentFormComponent {}
 ```
 
-### Using
+Use a diretiva `resolveCurrencyMask` no template:
 
 ```html
-<input type="text" inputmode="decimal" currencyMask formControlName="value" />
+<input type="text" inputmode="decimal" resolveCurrencyMask formControlName="amount" />
 ```
 
-- `ngModel` An attribute of type number. If is displayed `'$ 25.63'`, the attribute will be `'25.63'`.
+Se o usuário visualizar `$ 25.63`, o valor do controle será `25.63`.
 
-### Options
+## Configuração local
 
-You can set options...
+Passe as opções diretamente para a diretiva quando um campo precisar de uma máscara específica:
 
 ```html
-<!-- example for pt-BR money -->
-<input [currencyMask]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" formControlName="value" />
+<input
+  type="text"
+  inputmode="decimal"
+  formControlName="amount"
+  [resolveCurrencyMask]="{
+    prefix: 'R$ ',
+    thousands: '.',
+    decimal: ',',
+    precision: 2,
+    nullable: true
+  }"
+/>
 ```
 
-Available options:
+## Configuração global
 
-- `align` - Text alignment in input. (default: `right`)
-- `allowNegative` - If `true` can input negative values. (default: `true`)
-- `decimal` - Separator of decimals (default: `'.'`)
-- `precision` - Number of decimal places (default: `2`)
-- `prefix` - Money prefix (default: `'$ '`)
-- `suffix` - Money suffix (default: `''`)
-- `thousands` - Separator of thousands (default: `','`)
-- `nullable` - when true, the value of the clean field will be `null`, when false the value will be `0`
-- `min` - The minimum value (default: `undefined`)
-- `max` - The maximum value (default: `undefined`)
-- `inputMode` - Determines how to handle numbers as the user types them (default: `Financial`)
-
-Input Modes:
-
-- `Financial` - Numbers start at the highest precision decimal. Typing a number shifts numbers left.
-  The decimal character is ignored. Most cash registers work this way. For example:
-  - Typing `'12'` results in `'0.12'`
-  - Typing `'1234'` results in `'12.34'`
-  - Typing `'1.234'` results in `'12.34'`
-- `Natural` - Numbers start to the left of the decimal. Typing a number to the left of the decimal shifts
-  numbers left; typing to the right of the decimal replaces the next number. Most text inputs
-  and spreadsheets work this way. For example:
-  - Typing `'1234'` results in `'1234'`
-  - Typing `'1.234'` results in `'1.23'`
-  - Typing `'12.34'` results in `'12.34'`
-  - Typing `'123.4'` results in `'123.40'`
-
-You can also set options globally...
+Use `provideEnvironmentResolveCurrencyMask` para definir um padrão da aplicação:
 
 ```ts
-import { provideEnvironmentNgxCurrency, NgxCurrencyInputMode } from 'ngx-currency';
+import { bootstrapApplication } from "@angular/platform-browser";
+import { provideEnvironmentResolveCurrencyMask, ResolveCurrencyMaskInputMode } from "resolve-currencymask";
 
 bootstrapApplication(AppComponent, {
   providers: [
-    ...
-    provideEnvironmentNgxCurrency({
+    provideEnvironmentResolveCurrencyMask({
       align: "right",
       allowNegative: true,
       allowZero: true,
@@ -105,53 +94,103 @@ bootstrapApplication(AppComponent, {
       nullable: true,
       min: null,
       max: null,
-      inputMode: NgxCurrencyInputMode.Financial,
+      inputMode: ResolveCurrencyMaskInputMode.Financial,
     }),
-    ...
   ],
-}).catch((err) => console.error(err));
+});
 ```
 
-## Development
+As opções locais passadas em `[resolveCurrencyMask]` sobrescrevem a configuração global apenas naquele input.
 
-### Prepare your environment
+## Opções disponíveis
 
-- Install [Node.js](http://nodejs.org/) and NPM
-- Install local dev dependencies: `npm install` while current directory is this repo
+| Opção           | Tipo                           | Padrão      | Descrição                                                                 |
+| --------------- | ------------------------------ | ----------- | ------------------------------------------------------------------------- |
+| `align`         | `string`                       | `'right'`   | Alinhamento do texto no input.                                            |
+| `allowNegative` | `boolean`                      | `true`      | Permite valores negativos.                                                |
+| `allowZero`     | `boolean`                      | `true`      | Permite zero como valor válido.                                           |
+| `decimal`       | `string`                       | `'.'`       | Separador decimal.                                                        |
+| `precision`     | `number`                       | `2`         | Quantidade de casas decimais.                                             |
+| `prefix`        | `string`                       | `'$ '`      | Texto exibido antes do valor.                                             |
+| `suffix`        | `string`                       | `''`        | Texto exibido depois do valor.                                            |
+| `thousands`     | `string`                       | `','`       | Separador de milhar.                                                      |
+| `nullable`      | `boolean`                      | `false`     | Retorna `null` quando o campo estiver vazio; quando `false`, retorna `0`. |
+| `min`           | `number \| null`               | `undefined` | Valor mínimo permitido.                                                   |
+| `max`           | `number \| null`               | `undefined` | Valor máximo permitido.                                                   |
+| `inputMode`     | `ResolveCurrencyMaskInputMode` | `Financial` | Define como os números digitados são interpretados.                       |
 
-### Development server
+## Modos de entrada
 
-To start a local development server, run:
+### `ResolveCurrencyMaskInputMode.Financial`
+
+Indicado para comportamento parecido com caixas registradoras. Os números digitados entram a partir das casas decimais e deslocam o valor para a esquerda.
+
+Exemplos com `precision: 2`:
+
+| Digitação | Resultado |
+| --------- | --------- |
+| `12`      | `0.12`    |
+| `1234`    | `12.34`   |
+| `1.234`   | `12.34`   |
+
+### `ResolveCurrencyMaskInputMode.Natural`
+
+Indicado para comportamento mais próximo de inputs comuns e planilhas. O usuário digita naturalmente antes e depois do separador decimal.
+
+Exemplos com `precision: 2`:
+
+| Digitação | Resultado |
+| --------- | --------- |
+| `1234`    | `1234`    |
+| `1.234`   | `1.23`    |
+| `12.34`   | `12.34`   |
+| `123.4`   | `123.40`  |
+
+## API pública
+
+<!-- prettier-ignore -->
+```ts
+import {
+  RESOLVE_CURRENCY_MASK_CONFIG,
+  ResolveCurrencyMaskConfig,
+  ResolveCurrencyMaskDirective,
+  ResolveCurrencyMaskInputMode,
+  provideEnvironmentResolveCurrencyMask,
+} from "resolve-currencymask";
+```
+
+## Desenvolvimento
+
+Instale as dependências locais:
+
+```bash
+npm install
+```
+
+Inicie a aplicação de desenvolvimento:
 
 ```bash
 npm start
 ```
 
-### Building
-
-To build the library run:
+Gere o build da biblioteca:
 
 ```bash
 npm run build:lib
 ```
 
-### Testing
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Execute os testes unitários:
 
 ```bash
 npm test
 ```
 
-When running in the Chrome browser, you can set code breakpoints to debug tests using these instructions:
+Execute o lint:
 
-- From the main Karma browser page, click the `Debug` button to open the debug window
-- Press `ctrl + shift + i` to open Chrome developer tools
-- Press `ctrl + p` to search for a file to debug
-- Enter a file name like `input.handler.ts` and click the file
-- Within the file, click on a row number to set a breakpoint
-- Refresh the browser window to re-run tests and stop on the breakpoint
+```bash
+npm run lint
+```
 
-## License
+## Licença
 
-MIT @ Neri Bez Fontana
+MIT © Neri Bez Fontana

@@ -1,3 +1,28 @@
-.container-demo {
-  margin-top: 70px;
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.hero {
+  background: radial-gradient(
+      circle at top right,
+      rgba(13, 110, 253, 0.22),
+      transparent 32rem
+    ),
+    linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+  border: 1px solid rgba(13, 110, 253, 0.12);
+}
+
+.code-block {
+  padding: 1rem;
+  overflow-x: auto;
+  color: #d7e3ff;
+  background: #111827;
+  border-radius: 0.75rem;
+}
+
+.table td,
+.table th {
+  vertical-align: top;
 }

@@ -1,9 +1,12 @@
 import { InputService } from './input.service';
 import { createMockHtmlInputElement } from './mock';
-import { NgxCurrencyConfig, NgxCurrencyInputMode } from './ngx-currency.config';
+import {
+  ResolveCurrencyMaskConfig,
+  ResolveCurrencyMaskInputMode,
+} from './resolve-currencymask.config';
 
 describe('InputService', () => {
-  let options: NgxCurrencyConfig;
+  let options: ResolveCurrencyMaskConfig;
   let inputService: InputService;
 
   beforeEach(() => {
@@ -160,7 +163,7 @@ describe('InputService', () => {
       const htmlInputElement = createMockHtmlInputElement(10, 10);
       options.prefix = '$$';
       options.suffix = 'SUF';
-      options.inputMode = NgxCurrencyInputMode.Natural;
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
       inputService = new InputService(htmlInputElement, options);
       inputService.rawValue = '$$1.234,56SUF';
 
@@ -204,7 +207,7 @@ describe('InputService', () => {
       const htmlInputElement = createMockHtmlInputElement(7, 7);
       options.prefix = '$$';
       options.suffix = 'SUF';
-      options.inputMode = NgxCurrencyInputMode.Natural;
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
       inputService = new InputService(htmlInputElement, options);
       inputService.rawValue = '$$1.234,56SUF';
 
@@ -223,7 +226,7 @@ describe('InputService', () => {
       const htmlInputElement = createMockHtmlInputElement(4, 4);
       options.prefix = '$$';
       options.suffix = 'SUF';
-      options.inputMode = NgxCurrencyInputMode.Natural;
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
       inputService = new InputService(htmlInputElement, options);
       inputService.rawValue = '$$1,00SUF';
 
@@ -238,7 +241,7 @@ describe('InputService', () => {
       options.prefix = '$$';
       options.suffix = 'SUF';
       options.precision = 0;
-      options.inputMode = NgxCurrencyInputMode.Natural;
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
       inputService = new InputService(htmlInputElement, options);
       inputService.rawValue = '$$1.234SUF';
 
@@ -265,7 +268,7 @@ describe('InputService', () => {
       const htmlInputElement = createMockHtmlInputElement(5, 9);
       options.prefix = '$$';
       options.suffix = 'SUF';
-      options.inputMode = NgxCurrencyInputMode.Natural;
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
       inputService = new InputService(htmlInputElement, options);
       inputService.rawValue = '$$1.234,56SUF';
 

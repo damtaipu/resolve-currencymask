@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-currency-demo": {
+    "resolve-currencymask-demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
             "security": {
               "autoCsp": true
             },
-            "outputPath": "dist/ngx-currency-demo",
+            "outputPath": "dist/resolve-currencymask-demo",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -63,10 +63,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ngx-currency-demo:build:production"
+              "buildTarget": "resolve-currencymask-demo:build:production"
             },
             "development": {
-              "buildTarget": "ngx-currency-demo:build:development"
+              "buildTarget": "resolve-currencymask-demo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -74,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "ngx-currency-demo:build"
+            "buildTarget": "resolve-currencymask-demo:build"
           }
         },
         "test": {
@@ -101,23 +101,23 @@
         }
       }
     },
-    "ngx-currency": {
+    "resolve-currencymask": {
       "projectType": "library",
-      "root": "projects/ngx-currency",
-      "sourceRoot": "projects/ngx-currency/src",
+      "root": "projects/resolve-currencymask",
+      "sourceRoot": "projects/resolve-currencymask/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/ngx-currency/ng-package.json"
+            "project": "projects/resolve-currencymask/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ngx-currency/tsconfig.lib.prod.json"
+              "tsConfig": "projects/resolve-currencymask/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/ngx-currency/tsconfig.lib.json"
+              "tsConfig": "projects/resolve-currencymask/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -125,7 +125,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/ngx-currency/tsconfig.spec.json",
+            "tsConfig": "projects/resolve-currencymask/tsconfig.spec.json",
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         },
@@ -133,8 +133,8 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
-              "projects/ngx-currency/**/*.ts",
-              "projects/ngx-currency/**/*.html"
+              "projects/resolve-currencymask/**/*.ts",
+              "projects/resolve-currencymask/**/*.html"
             ]
           }
         }

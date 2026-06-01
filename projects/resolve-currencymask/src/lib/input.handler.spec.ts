@@ -1,10 +1,13 @@
 import { InputHandler } from './input.handler';
 import { InputService } from './input.service';
 import { createMockHtmlInputElement } from './mock';
-import { NgxCurrencyConfig, NgxCurrencyInputMode } from './ngx-currency.config';
+import {
+  ResolveCurrencyMaskConfig,
+  ResolveCurrencyMaskInputMode,
+} from './resolve-currencymask.config';
 
 describe('InputHandler', () => {
-  let options: NgxCurrencyConfig;
+  let options: ResolveCurrencyMaskConfig;
   let inputElement: HTMLInputElement;
   let inputHandler: InputHandler;
   let inputService: InputService;
@@ -61,7 +64,7 @@ describe('InputHandler', () => {
 
     it('handles last character removed in natural mode', () => {
       options.precision = 2;
-      options.inputMode = NgxCurrencyInputMode.Natural;
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
       inputService.rawValue = '$123,4';
       inputElement.selectionStart = 6;
       inputService.inputManager['_storedRawValue'] = '$123,45';
@@ -84,7 +87,7 @@ describe('InputHandler', () => {
 
     it('handles 1 character added in natural mode after decimal', () => {
       options.precision = 2;
-      options.inputMode = NgxCurrencyInputMode.Natural;
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
       inputService.rawValue = '$123,945';
       inputElement.selectionStart = 6;
       inputService.inputManager['_storedRawValue'] = '$123,45';
@@ -97,7 +100,7 @@ describe('InputHandler', () => {
 
     it('handles 1 character added in natural mode before decimal', () => {
       options.precision = 2;
-      options.inputMode = NgxCurrencyInputMode.Natural;
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
       inputService.rawValue = '$1293,45';
       inputElement.selectionStart = 4;
       inputService.inputManager['_storedRawValue'] = '$123,45';
