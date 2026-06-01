@@ -50,18 +50,6 @@ export class InputService {
     const keyChar = String.fromCharCode(keyCode);
     const isDecimalChar = keyChar === this._options.decimal;
 
-    if (
-      inputMode === ResolveCurrencyMaskInputMode.Natural &&
-      precision > 0 &&
-      isDecimalChar
-    ) {
-      const decimalIndex = this.rawValue?.indexOf(decimal) ?? -1;
-      if (decimalIndex !== -1) {
-        this.updateFieldValue(decimalIndex + 1);
-        return;
-      }
-    }
-
     if (!this.rawValue) {
       this.rawValue = this.applyMask(false, keyChar);
       let selectionStart: number | undefined = undefined;
@@ -81,13 +69,12 @@ export class InputService {
         this.rawValue.length,
       );
 
-      // In natural mode, replace decimal digits instead of shifting them.
+      // In natural mode, replace decimals instead of shifting them.
       const inDecimalPortion = rawValueStart.indexOf(decimal) !== -1;
       if (
         inputMode === ResolveCurrencyMaskInputMode.Natural &&
         inDecimalPortion &&
-        selectionStart === selectionEnd &&
-        this._singleDigitRegex.test(rawValueEnd.charAt(0))
+        selectionStart === selectionEnd
       ) {
         rawValueEnd = rawValueEnd.substring(1);
       }

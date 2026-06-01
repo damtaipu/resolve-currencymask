@@ -203,39 +203,6 @@ describe('InputService', () => {
       expect(htmlInputElement.selectionEnd).toEqual(3);
     });
 
-    it('should move cursor to decimals when decimal separator is typed at the end in natural mode', () => {
-      const htmlInputElement = createMockHtmlInputElement(8, 8);
-      options.prefix = '$$';
-      options.suffix = 'SUF';
-      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
-      inputService = new InputService(htmlInputElement, options);
-      inputService.rawValue = '$$123,00SUF';
-
-      inputService.addNumber(','.charCodeAt(0));
-
-      expect(inputService.rawValue).toEqual('$$123,00SUF');
-      expect(htmlInputElement.selectionStart).toEqual(6);
-      expect(htmlInputElement.selectionEnd).toEqual(6);
-    });
-
-    it('should allow typing both decimal places after the separator in natural mode', () => {
-      const htmlInputElement = createMockHtmlInputElement(8, 8);
-      options.prefix = '$$';
-      options.suffix = 'SUF';
-      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
-      inputService = new InputService(htmlInputElement, options);
-      inputService.rawValue = '$$123,00SUF';
-
-      inputService.addNumber(','.charCodeAt(0));
-      inputService.addNumber('4'.charCodeAt(0));
-      inputService.addNumber('5'.charCodeAt(0));
-
-      expect(inputService.rawValue).toEqual('$$123,45SUF');
-      expect(htmlInputElement.selectionStart).toEqual(8);
-      expect(htmlInputElement.selectionEnd).toEqual(8);
-      expect(inputService.value).toEqual(123.45);
-    });
-
     it('should replace decimals with 0s when deleting in natural mode', () => {
       const htmlInputElement = createMockHtmlInputElement(7, 7);
       options.prefix = '$$';
