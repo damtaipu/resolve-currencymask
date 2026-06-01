@@ -25,6 +25,12 @@ All notable changes to this project will be documented in this file. See [commit
 
 * Angular: package updated and validated for compatibility with Angular 21
 
+### Build System
+
+* tests: migrate from Karma + Jasmine to Jest
+* tests: add Jest Angular setup (`jest-preset-angular`) and dedicated Jest tsconfig
+* tests: update specs to use `jest.spyOn` and keep test compatibility
+
 ## [19.0.0](https://github.com/nbfontana/resolve-currencymask/compare/v18.0.0...v19.0.0) (2025-01-06)
 
 

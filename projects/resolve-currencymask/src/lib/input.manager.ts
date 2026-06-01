@@ -5,14 +5,14 @@ export class InputManager {
 
   setCursorAt(position: number): void {
     if (!this._htmlInputElement) return;
-    this._htmlInputElement.focus();
-    this._htmlInputElement.setSelectionRange(position, position);
+    this._htmlInputElement.focus?.();
+    this._htmlInputElement.setSelectionRange?.(position, position);
   }
 
   setSelectionRange(selectionStart: number, selectionEnd: number): void {
     if (!this._htmlInputElement) return;
-    this._htmlInputElement.focus();
-    this._htmlInputElement.setSelectionRange(selectionStart, selectionEnd);
+    this._htmlInputElement.focus?.();
+    this._htmlInputElement.setSelectionRange?.(selectionStart, selectionEnd);
   }
 
   updateValueAndCursor(
