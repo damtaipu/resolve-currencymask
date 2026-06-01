@@ -1,7 +1,10 @@
 import { JsonPipe } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ResolveCurrencyMaskDirective } from '../../projects/resolve-currencymask/src/public-api';
+import {
+  ResolveCurrencyMaskDirective,
+  ResolveCurrencyMaskInputMode,
+} from '../../projects/resolve-currencymask/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -17,12 +20,15 @@ export class AppComponent {
     allowNegative: true,
     nullable: true,
     max: 250_000_000,
+    inputMode: ResolveCurrencyMaskInputMode.Financial,
   });
 
-  private readonly formBuilder = inject(FormBuilder);
+  protected readonly resolveCurrencyMaskInputMode =
+    ResolveCurrencyMaskInputMode;
 
   protected readonly form = this.formBuilder.nonNullable.group({
     value: 0,
+    inputMode: this.resolveCurrencyMaskOptions().inputMode,
   });
 
   protected readonly installCommand = 'npm install resolve-currencymask --save';
@@ -117,4 +123,16 @@ bootstrapApplication(AppComponent, {
       description: 'Define o comportamento de digitação Financial ou Natural.',
     },
   ];
+
+  constructor(private readonly formBuilder: FormBuilder) {
+    this.form.controls.inputMode.valueChanges.subscribe(inputMode => {
+      this.resolveCurrencyMaskOptions.update(options => ({
+        ...options,
+        inputMode,
+      }));
+
+      // Clear the value input when the input mode is changed.
+      this.form.patchValue({ value: 0 });
+    });
+  }
 }
