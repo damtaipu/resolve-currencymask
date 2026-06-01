@@ -10,7 +10,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test resolve-currencymask",
     "lint": "ng lint",
-    "prepare": "husky"
+    "prepare": "husky",
+    "build:pages": "ng build --configuration production --base-href /resolve-currencymask/"
   },
   "private": true,
   "dependencies": {
