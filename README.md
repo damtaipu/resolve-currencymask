@@ -7,7 +7,7 @@
 
 `resolve-currencymask` é uma diretiva standalone para Angular que aplica máscara monetária em campos `<input>` e mantém o valor do formulário como número.
 
-https://nbfontana.github.io/resolve-currencymask/
+https://damtaipu.github.io/resolve-currencymask/
 
 - campos de preço, valor, saldo ou limite;
 - formulários reativos (`ReactiveFormsModule`);
@@ -15,7 +15,7 @@ https://nbfontana.github.io/resolve-currencymask/
 - formatos monetários internacionais, como `R$ 1.234,56` ou `$ 1,234.56`.
 
 - [Getting Started](#getting-started)
-- [Documentation](https://nbfontana.github.io/resolve-currencymask/docs/)
+- [Documentation](https://damtaipu.github.io/resolve-currencymask/docs/)
 - [Development](#development)
 - [License](#license)
 
