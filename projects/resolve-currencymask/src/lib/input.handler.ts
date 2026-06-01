@@ -1,12 +1,15 @@
 import { InputService } from './input.service';
-import { NgxCurrencyConfig } from './ngx-currency.config';
+import { ResolveCurrencyMaskConfig } from './resolve-currencymask.config';
 
 export class InputHandler {
   inputService: InputService;
   onModelChange: (value: number | null) => void = () => undefined;
   onModelTouched: () => void = () => undefined;
 
-  constructor(htmlInputElement: HTMLInputElement, options: NgxCurrencyConfig) {
+  constructor(
+    htmlInputElement: HTMLInputElement,
+    options: ResolveCurrencyMaskConfig,
+  ) {
     this.inputService = new InputService(htmlInputElement, options);
   }
 
@@ -132,7 +135,7 @@ export class InputHandler {
     }, 1);
   }
 
-  updateOptions(options: NgxCurrencyConfig): void {
+  updateOptions(options: ResolveCurrencyMaskConfig): void {
     this.inputService.updateOptions(options);
   }
 
