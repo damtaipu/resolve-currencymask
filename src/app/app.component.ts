@@ -19,6 +19,7 @@ export class AppComponent {
     decimal: ',',
     allowNegative: true,
     nullable: true,
+    inputMode: ResolveCurrencyMaskInputMode.Natural,
     max: 250_000_000,
     inputMode: ResolveCurrencyMaskInputMode.Financial,
   });
