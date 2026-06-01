@@ -1,7 +1,6 @@
 <a
   href="https://github.com/nbfontana/resolve-currencymask"
   class="d-none d-sm-block"
-  aria-label="Abrir repositório no GitHub"
 >
   <img
     decoding="async"
@@ -16,24 +15,26 @@
 
 <nav class="navbar navbar-expand-lg bg-light border-bottom sticky-top">
   <div class="container">
-    <a class="navbar-brand fw-semibold" href="#top">ResolveCurrencyMask</a>
+    <a class="navbar-brand" href="/">ResolveCurrencyMask</a>
 
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item">
         <a class="nav-link" href="#demo">Demo</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#instalacao">Instalação</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#documentacao">Documentação</a>
+        <a
+          class="nav-link"
+          target="_blank"
+          href="https://github.com/nbfontana/resolve-currencymask#installing-and-importing"
+        >
+          Installation
+        </a>
       </li>
       <li class="nav-item">
         <a
           class="nav-link"
           target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/nbfontana/resolve-currencymask"
+          href="https://nbfontana.github.io/resolve-currencymask/docs/"
         >
           GitHub
         </a>
@@ -42,30 +43,38 @@
   </div>
 </nav>
 
-<main id="top" class="container py-5">
-  <section class="hero rounded-4 p-4 p-md-5 mb-5">
-    <div class="row align-items-center g-4">
-      <div class="col-lg-7">
-        <span class="badge text-bg-primary mb-3">Angular 21 ready</span>
-        <h1 class="display-5 fw-bold">Máscara monetária para Angular</h1>
-        <p class="lead mb-4">
-          Use <code>resolveCurrencyMask</code> em inputs reativos ou orientados
-          a template com configuração local ou global.
-        </p>
-        <div class="d-flex flex-wrap gap-2">
-          <a href="#demo" class="btn btn-primary btn-lg">Ver demo</a>
-          <a href="#instalacao" class="btn btn-outline-primary btn-lg">
-            Instalar
-          </a>
-        </div>
+<div class="container-fluid container-demo">
+  <form class="container" [formGroup]="form">
+    <div class="row mb-3">
+      <div class="col-lg-3 col-sm-8 form-group">
+        <label for="exampleInput" class="form-label">Example</label>
+        <input
+          type="text"
+          inputmode="decimal"
+          class="form-control"
+          id="exampleInput"
+          autofocus
+          placeholder="R$ 0,00"
+          formControlName="value"
+          [resolveCurrencyMask]="resolveCurrencyMaskOptions()"
+        />
       </div>
-      <div class="col-lg-5">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h2 class="h5 card-title">Exemplo rápido</h2>
-            <pre
-              class="code-block mb-0"
-            ><code>{{ templateExample }}</code></pre>
+    </div>
+    <div class="row mb-3">
+      <div class="col-lg-3 col-sm-8 form-group">
+        <span class="form-label">Input Mode</span>
+        <div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="inputMode"
+                formControlName="inputMode"
+                [value]="resolveCurrencyMaskInputMode.Financial"
+              />
+              Financial
+            </label>
           </div>
         </div>
       </div>
@@ -87,14 +96,11 @@
             <div class="mb-3">
               <label for="exampleInput" class="form-label">Valor</label>
               <input
-                type="text"
-                inputmode="decimal"
-                class="form-control form-control-lg"
-                id="exampleInput"
-                autofocus
-                placeholder="R$ 0,00"
-                formControlName="value"
-                [resolveCurrencyMask]="resolveCurrencyMaskOptions()"
+                class="form-check-input"
+                type="radio"
+                name="inputMode"
+                formControlName="inputMode"
+                [value]="resolveCurrencyMaskInputMode.Natural"
               />
             </div>
 

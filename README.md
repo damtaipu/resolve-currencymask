@@ -7,14 +7,17 @@
 
 `resolve-currencymask` é uma diretiva standalone para Angular que aplica máscara monetária em campos `<input>` e mantém o valor do formulário como número.
 
-Ela é indicada para cenários como:
+https://nbfontana.github.io/resolve-currencymask/
 
 - campos de preço, valor, saldo ou limite;
 - formulários reativos (`ReactiveFormsModule`);
 - aplicações Angular que precisam de configuração local ou global de máscara;
 - formatos monetários internacionais, como `R$ 1.234,56` ou `$ 1,234.56`.
 
-## Compatibilidade
+- [Getting Started](#getting-started)
+- [Documentation](https://nbfontana.github.io/resolve-currencymask/docs/)
+- [Development](#development)
+- [License](#license)
 
 | Pacote     | Versão suportada |
 | ---------- | ---------------- |
@@ -24,7 +27,9 @@ Ela é indicada para cenários como:
 
 ## Instalação
 
-```bash
+Install the package by command:
+
+```sh
 npm install resolve-currencymask --save
 ```
 
@@ -33,14 +38,12 @@ npm install resolve-currencymask --save
 Importe a diretiva no componente standalone em que o input será usado:
 
 ```ts
-import { Component } from "@angular/core";
-import { ReactiveFormsModule } from "@angular/forms";
 import { ResolveCurrencyMaskDirective } from "resolve-currencymask";
 
 @Component({
-  selector: "app-payment-form",
-  templateUrl: "./payment-form.component.html",
-  imports: [ReactiveFormsModule, ResolveCurrencyMaskDirective],
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  imports: [ResolveCurrencyMaskDirective],
 })
 export class PaymentFormComponent {}
 ```
@@ -48,7 +51,7 @@ export class PaymentFormComponent {}
 Use a diretiva `resolveCurrencyMask` no template:
 
 ```html
-<input type="text" inputmode="decimal" resolveCurrencyMask formControlName="amount" />
+<input type="text" inputmode="decimal" resolveCurrencyMask formControlName="value" />
 ```
 
 Se o usuário visualizar `$ 25.63`, o valor do controle será `25.63`.
@@ -58,18 +61,8 @@ Se o usuário visualizar `$ 25.63`, o valor do controle será `25.63`.
 Passe as opções diretamente para a diretiva quando um campo precisar de uma máscara específica:
 
 ```html
-<input
-  type="text"
-  inputmode="decimal"
-  formControlName="amount"
-  [resolveCurrencyMask]="{
-    prefix: 'R$ ',
-    thousands: '.',
-    decimal: ',',
-    precision: 2,
-    nullable: true
-  }"
-/>
+<!-- example for pt-BR money -->
+<input [resolveCurrencyMask]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" formControlName="value" />
 ```
 
 ## Configuração global
@@ -77,11 +70,11 @@ Passe as opções diretamente para a diretiva quando um campo precisar de uma m�
 Use `provideEnvironmentResolveCurrencyMask` para definir um padrão da aplicação:
 
 ```ts
-import { bootstrapApplication } from "@angular/platform-browser";
-import { provideEnvironmentResolveCurrencyMask, ResolveCurrencyMaskInputMode } from "resolve-currencymask";
+import { provideEnvironmentResolveCurrencyMask, ResolveCurrencyMaskInputMode } from 'resolve-currencymask';
 
 bootstrapApplication(AppComponent, {
   providers: [
+    ...
     provideEnvironmentResolveCurrencyMask({
       align: "right",
       allowNegative: true,
