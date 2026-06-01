@@ -61,19 +61,36 @@ export class InputService {
       }
       this.updateFieldValue(selectionStart);
     } else {
-      const selectionStart = this.inputSelection.selectionStart;
-      const selectionEnd = this.inputSelection.selectionEnd;
+      let selectionStart = this.inputSelection.selectionStart;
+      let selectionEnd = this.inputSelection.selectionEnd;
+      const decimalIndex = this.rawValue.indexOf(decimal);
+
+      // In natural mode, when cursor is after all decimal digits, keep typing in integer portion.
+      if (
+        inputMode === ResolveCurrencyMaskInputMode.Natural &&
+        precision > 0 &&
+        selectionStart === selectionEnd &&
+        decimalIndex !== -1 &&
+        selectionStart > decimalIndex + precision
+      ) {
+        selectionStart = decimalIndex;
+        selectionEnd = decimalIndex;
+      }
+
       const rawValueStart = this.rawValue.substring(0, selectionStart);
       let rawValueEnd = this.rawValue.substring(
         selectionEnd,
         this.rawValue.length,
       );
 
-      // In natural mode, replace decimals instead of shifting them.
-      const inDecimalPortion = rawValueStart.indexOf(decimal) !== -1;
+      // In natural mode, replace decimal digits only while the cursor is inside decimal precision.
+      const isInsideDecimalPortion =
+        decimalIndex !== -1 &&
+        selectionStart > decimalIndex &&
+        selectionStart <= decimalIndex + precision;
       if (
         inputMode === ResolveCurrencyMaskInputMode.Natural &&
-        inDecimalPortion &&
+        isInsideDecimalPortion &&
         selectionStart === selectionEnd
       ) {
         rawValueEnd = rawValueEnd.substring(1);
@@ -410,6 +427,41 @@ export class InputService {
     const value = this.value;
     this._options = options;
     this.value = value;
+    this.enforceCursorBounds();
+  }
+
+  enforceCursorBounds(): void {
+    const rawValue = this.rawValue ?? '';
+    const prefixLength = this._options.prefix.length;
+    const suffixStart = rawValue.length - this._options.suffix.length;
+    const minPosition = prefixLength;
+    const maxPosition = Math.max(minPosition, suffixStart);
+
+    const selectionStart = this.inputSelection.selectionStart;
+    const selectionEnd = this.inputSelection.selectionEnd;
+    const nextSelectionStart = Math.min(
+      maxPosition,
+      Math.max(minPosition, selectionStart),
+    );
+    const nextSelectionEnd = Math.min(
+      maxPosition,
+      Math.max(minPosition, selectionEnd),
+    );
+
+    if (
+      nextSelectionStart !== selectionStart ||
+      nextSelectionEnd !== selectionEnd
+    ) {
+      this.inputManager.setSelectionRange(nextSelectionStart, nextSelectionEnd);
+    }
+  }
+
+  moveCursorToEnd(): void {
+    const rawValue = this.rawValue ?? '';
+    const prefixLength = this._options.prefix.length;
+    const suffixStart = rawValue.length - this._options.suffix.length;
+    const position = Math.max(prefixLength, suffixStart);
+    this.inputManager.setSelectionRange(position, position);
   }
 
   prefixLength(): number {

@@ -1,11 +1,18 @@
 export class InputManager {
   private _storedRawValue: string | null = null;
 
-  constructor(private readonly _htmlInputElement: HTMLInputElement) {}
+  constructor(private readonly _htmlInputElement: HTMLInputElement | null) {}
 
   setCursorAt(position: number): void {
+    if (!this._htmlInputElement) return;
     this._htmlInputElement.focus();
     this._htmlInputElement.setSelectionRange(position, position);
+  }
+
+  setSelectionRange(selectionStart: number, selectionEnd: number): void {
+    if (!this._htmlInputElement) return;
+    this._htmlInputElement.focus();
+    this._htmlInputElement.setSelectionRange(selectionStart, selectionEnd);
   }
 
   updateValueAndCursor(
@@ -20,6 +27,8 @@ export class InputManager {
   }
 
   get canInputMoreNumbers(): boolean {
+    if (!this._htmlInputElement) return true;
+
     const onlyNumbers =
       this.rawValue?.replace(/[^0-9\u0660-\u0669\u06F0-\u06F9]/g, '') ?? '';
     const hasReachedMaxLength = !(
@@ -42,6 +51,10 @@ export class InputManager {
     selectionStart: number;
     selectionEnd: number;
   } {
+    if (!this._htmlInputElement) {
+      return { selectionStart: 0, selectionEnd: 0 };
+    }
+
     return {
       selectionStart: this._htmlInputElement.selectionStart ?? 0,
       selectionEnd: this._htmlInputElement.selectionEnd ?? 0,

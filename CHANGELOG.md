@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [Unreleased]
+
+### Bug Fixes
+
+* natural mode typing: prevent digit loss when cursor is at the end of the input and keep insertion in the integer portion
+* cursor behavior: never allow cursor/selection before `prefix` or after editable range
+* focus and click behavior: always place cursor at the end of the numeric value (before `suffix`)
+* input manager: make selection handling null-safe for service-level tests and option updates
+
+### Tests
+
+* add coverage for natural mode typing scenarios (`addNumber`) with cursor at end, decimals, and separator typing
+* add coverage for cursor bounds enforcement and cursor-to-end behavior
+
+### Documentation
+
+* README: clarify project context as a fork and Angular 21 compatibility work
+* README: fix encoding/accent issues in Portuguese text
+
+### Compatibility
+
+* Angular: package updated and validated for compatibility with Angular 21
+
 ## [19.0.0](https://github.com/nbfontana/resolve-currencymask/compare/v18.0.0...v19.0.0) (2025-01-06)
 
 

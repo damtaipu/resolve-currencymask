@@ -304,4 +304,122 @@ describe('InputService', () => {
       expect(htmlInputElement.selectionEnd).toEqual(10);
     });
   });
+
+  describe('addNumber in natural mode', () => {
+    beforeEach(() => {
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
+      options.prefix = '';
+      options.suffix = '';
+      options.thousands = '.';
+      options.decimal = ',';
+      options.precision = 2;
+    });
+
+    it('should keep typing in integer portion when cursor is at the end', () => {
+      const htmlInputElement = createMockHtmlInputElement(4, 4);
+      inputService = new InputService(htmlInputElement, options);
+      inputService.rawValue = '1,23';
+
+      inputService.addNumber('4'.charCodeAt(0));
+
+      expect(inputService.rawValue).toEqual('14,23');
+      expect(htmlInputElement.selectionStart).toEqual(2);
+      expect(htmlInputElement.selectionEnd).toEqual(2);
+      expect(inputService.value).toEqual(14.23);
+    });
+
+    it('should replace first decimal digit when cursor is inside decimal portion', () => {
+      const htmlInputElement = createMockHtmlInputElement(2, 2);
+      inputService = new InputService(htmlInputElement, options);
+      inputService.rawValue = '1,23';
+
+      inputService.addNumber('4'.charCodeAt(0));
+
+      expect(inputService.rawValue).toEqual('1,43');
+      expect(htmlInputElement.selectionStart).toEqual(3);
+      expect(htmlInputElement.selectionEnd).toEqual(3);
+      expect(inputService.value).toEqual(1.43);
+    });
+
+    it('should move cursor past decimal separator when typing the decimal char over it', () => {
+      const htmlInputElement = createMockHtmlInputElement(1, 1);
+      inputService = new InputService(htmlInputElement, options);
+      inputService.rawValue = '1,23';
+
+      inputService.addNumber(','.charCodeAt(0));
+
+      expect(inputService.rawValue).toEqual('1,23');
+      expect(htmlInputElement.selectionStart).toEqual(2);
+      expect(htmlInputElement.selectionEnd).toEqual(2);
+    });
+
+    it('should replace second decimal digit when cursor is before last decimal house', () => {
+      const htmlInputElement = createMockHtmlInputElement(3, 3);
+      inputService = new InputService(htmlInputElement, options);
+      inputService.rawValue = '1,23';
+
+      inputService.addNumber('9'.charCodeAt(0));
+
+      expect(inputService.rawValue).toEqual('1,29');
+      expect(htmlInputElement.selectionStart).toEqual(4);
+      expect(htmlInputElement.selectionEnd).toEqual(4);
+      expect(inputService.value).toEqual(1.29);
+    });
+  });
+
+  describe('enforceCursorBounds', () => {
+    it('should move cursor to prefix when it is before prefix', () => {
+      options.prefix = 'R$ ';
+      options.suffix = '';
+      const htmlInputElement = createMockHtmlInputElement(0, 0);
+      inputService = new InputService(htmlInputElement, options);
+      inputService.rawValue = 'R$ 1,23';
+
+      inputService.enforceCursorBounds();
+
+      expect(htmlInputElement.selectionStart).toEqual(3);
+      expect(htmlInputElement.selectionEnd).toEqual(3);
+    });
+
+    it('should clamp selection range to editable area', () => {
+      options.prefix = 'R$ ';
+      options.suffix = ' USD';
+      const htmlInputElement = createMockHtmlInputElement(1, 20);
+      inputService = new InputService(htmlInputElement, options);
+      inputService.rawValue = 'R$ 1,23 USD';
+
+      inputService.enforceCursorBounds();
+
+      expect(htmlInputElement.selectionStart).toEqual(3);
+      expect(htmlInputElement.selectionEnd).toEqual(7);
+    });
+  });
+
+  describe('moveCursorToEnd', () => {
+    it('should place cursor before suffix', () => {
+      options.prefix = 'R$ ';
+      options.suffix = ' USD';
+      const htmlInputElement = createMockHtmlInputElement(0, 0);
+      inputService = new InputService(htmlInputElement, options);
+      inputService.rawValue = 'R$ 1,23 USD';
+
+      inputService.moveCursorToEnd();
+
+      expect(htmlInputElement.selectionStart).toEqual(7);
+      expect(htmlInputElement.selectionEnd).toEqual(7);
+    });
+
+    it('should not place cursor before prefix when value is empty', () => {
+      options.prefix = 'R$ ';
+      options.suffix = '';
+      const htmlInputElement = createMockHtmlInputElement(0, 0);
+      inputService = new InputService(htmlInputElement, options);
+      inputService.rawValue = '';
+
+      inputService.moveCursorToEnd();
+
+      expect(htmlInputElement.selectionStart).toEqual(3);
+      expect(htmlInputElement.selectionEnd).toEqual(3);
+    });
+  });
 });

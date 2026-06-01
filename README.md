@@ -1,11 +1,11 @@
-# resolve-currencymask
+﻿# resolve-currencymask
 
 [![npm version](https://badge.fury.io/js/resolve-currencymask.png)](http://badge.fury.io/js/resolve-currencymask)
 [![GitHub issues](https://img.shields.io/github/issues/nbfontana/resolve-currencymask.png)](https://github.com/nbfontana/resolve-currencymask/issues)
 [![GitHub stars](https://img.shields.io/github/stars/nbfontana/resolve-currencymask.png)](https://github.com/nbfontana/resolve-currencymask/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.png)](https://raw.githubusercontent.com/nbfontana/resolve-currencymask/master/LICENSE)
 
-`resolve-currencymask` é uma diretiva standalone para Angular que aplica máscara monetária em campos `<input>` e mantém o valor do formulário como número.
+`resolve-currencymask` é um fork do `ng2-currency-mask`/`ngx-currency-mask`. Como melhorias e atualizações sugeridas na lib original não avançaram, este pacote foi atualizado para manter compatibilidade com o Angular 21 e incluir ajustes práticos no comportamento da máscara monetária em campos `<input>`, mantendo o valor do formulário como número.
 
 https://damtaipu.github.io/resolve-currencymask/
 
@@ -187,3 +187,5 @@ npm run lint
 ## Licença
 
 MIT © Neri Bez Fontana
+
+

@@ -1,16 +1,16 @@
 {
   "name": "resolve-currencymask",
   "version": "21.0.0",
-  "description": "A very simple currency mask directive that allows using a number attribute with the ngModel.",
+  "description": "A very simple currency mask directive that allows using a number attribute with the ngModel and Reactive Form.",
   "author": "Neri Bez Fontana",
   "license": "MIT",
-  "homepage": "https://github.com/nbfontana/resolve-currencymask#readme",
+  "homepage": "https://github.com/damtaipu/resolve-currencymask#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nbfontana/resolve-currencymask"
+    "url": "https://github.com/damtaipu/resolve-currencymask"
   },
   "bugs": {
-    "url": "https://github.com/nbfontana/resolve-currencymask/issues"
+    "url": "https://github.com/damtaipu/resolve-currencymask/issues"
   },
   "keywords": [
     "angular",

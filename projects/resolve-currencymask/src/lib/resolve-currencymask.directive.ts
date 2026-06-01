@@ -122,6 +122,22 @@ export class ResolveCurrencyMaskDirective
     }
   }
 
+  @HostListener('focus')
+  handleFocus() {
+    if (!this.isReadOnly()) this._inputHandler.moveCursorToEnd();
+  }
+
+  @HostListener('click')
+  @HostListener('mouseup')
+  handleCursorEvents() {
+    if (!this.isReadOnly()) this._inputHandler.moveCursorToEnd();
+  }
+
+  @HostListener('keyup')
+  handleKeyup() {
+    if (!this.isReadOnly()) this._inputHandler.enforceCursorBounds();
+  }
+
   @HostListener('keydown', ['$event'])
   handleKeydown(event: KeyboardEvent) {
     if (!this.isChromeAndroid()) {

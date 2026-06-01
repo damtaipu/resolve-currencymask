@@ -22,6 +22,7 @@ export class InputHandler {
   }
 
   handleInput(): void {
+    this.inputService.enforceCursorBounds();
     const rawValue = this.inputService.rawValue ?? '';
     const selectionStart = this.inputService.inputSelection.selectionStart;
     const keyCode = rawValue.charCodeAt(selectionStart - 1);
@@ -60,6 +61,7 @@ export class InputHandler {
   }
 
   handleKeydown(event: KeyboardEvent): void {
+    this.inputService.enforceCursorBounds();
     const keyCode = event.which || event.charCode || event.keyCode;
     if (keyCode == 8 || keyCode == 46 || keyCode == 63272) {
       event.preventDefault();
@@ -85,6 +87,7 @@ export class InputHandler {
   }
 
   handleKeypress(event: KeyboardEvent): void {
+    this.inputService.enforceCursorBounds();
     const keyCode = event.which || event.charCode || event.keyCode;
     event.preventDefault();
     if (keyCode === 97 && event.ctrlKey) {
@@ -137,6 +140,14 @@ export class InputHandler {
 
   updateOptions(options: ResolveCurrencyMaskConfig): void {
     this.inputService.updateOptions(options);
+  }
+
+  enforceCursorBounds(): void {
+    this.inputService.enforceCursorBounds();
+  }
+
+  moveCursorToEnd(): void {
+    this.inputService.moveCursorToEnd();
   }
 
   getOnModelChange(): (value: number | null) => void {
