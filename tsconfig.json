@@ -13,7 +13,7 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "paths": {
-      "ngx-currency": ["./dist/ngx-currency"]
+      "resolve-currencymask": ["./dist/resolve-currencymask"]
     },
     "experimentalDecorators": true,
     "moduleResolution": "bundler",

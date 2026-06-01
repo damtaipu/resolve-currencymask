@@ -15,52 +15,52 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { InputHandler } from './input.handler';
 import {
-  NGX_CURRENCY_CONFIG,
-  NgxCurrencyConfig,
-  NgxCurrencyInputMode,
-} from './ngx-currency.config';
+  RESOLVE_CURRENCY_MASK_CONFIG,
+  ResolveCurrencyMaskConfig,
+  ResolveCurrencyMaskInputMode,
+} from './resolve-currencymask.config';
 
 @Directive({
-  selector: 'input[currencyMask]',
+  selector: 'input[resolveCurrencyMask]',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NgxCurrencyDirective),
+      useExisting: forwardRef(() => ResolveCurrencyMaskDirective),
       multi: true,
     },
   ],
 })
-export class NgxCurrencyDirective
+export class ResolveCurrencyMaskDirective
   implements AfterViewInit, ControlValueAccessor, DoCheck
 {
   @Input()
-  set currencyMask(value: Partial<NgxCurrencyConfig> | string) {
+  set resolveCurrencyMask(value: Partial<ResolveCurrencyMaskConfig> | string) {
     if (typeof value === 'string') return;
 
     this._options = value;
   }
 
   /**
-   * @deprecated Use currencyMask input instead
+   * @deprecated Use resolveCurrencyMask input instead
    */
   @Input()
-  set options(value: Partial<NgxCurrencyConfig>) {
+  set options(value: Partial<ResolveCurrencyMaskConfig>) {
     this._options = value;
   }
 
   private readonly _inputHandler: InputHandler;
   private readonly _keyValueDiffer: KeyValueDiffer<
-    keyof NgxCurrencyConfig,
+    keyof ResolveCurrencyMaskConfig,
     unknown
   >;
 
-  private _options: Partial<NgxCurrencyConfig> = {};
-  private readonly _optionsTemplate: NgxCurrencyConfig;
+  private _options: Partial<ResolveCurrencyMaskConfig> = {};
+  private readonly _optionsTemplate: ResolveCurrencyMaskConfig;
 
   constructor(
     @Optional()
-    @Inject(NGX_CURRENCY_CONFIG)
-    globalOptions: Partial<NgxCurrencyConfig>,
+    @Inject(RESOLVE_CURRENCY_MASK_CONFIG)
+    globalOptions: Partial<ResolveCurrencyMaskConfig>,
     keyValueDiffers: KeyValueDiffers,
     private readonly _elementRef: ElementRef<HTMLInputElement>,
   ) {
@@ -74,7 +74,7 @@ export class NgxCurrencyDirective
       suffix: '',
       thousands: ',',
       nullable: false,
-      inputMode: NgxCurrencyInputMode.Financial,
+      inputMode: ResolveCurrencyMaskInputMode.Financial,
       ...globalOptions,
     };
 
