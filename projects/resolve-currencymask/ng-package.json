@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/ngx-currency",
+  "dest": "../../dist/resolve-currencymask",
   "lib": {
     "entryFile": "src/public-api.ts"
   }

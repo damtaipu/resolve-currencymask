@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 
-export interface NgxCurrencyConfig {
+export interface ResolveCurrencyMaskConfig {
   align: string;
   allowNegative: boolean;
   allowZero: boolean;
@@ -12,14 +12,14 @@ export interface NgxCurrencyConfig {
   nullable: boolean;
   min?: number | null;
   max?: number | null;
-  inputMode?: NgxCurrencyInputMode;
+  inputMode?: ResolveCurrencyMaskInputMode;
 }
 
-export enum NgxCurrencyInputMode {
+export enum ResolveCurrencyMaskInputMode {
   Financial,
   Natural,
 }
 
-export const NGX_CURRENCY_CONFIG = new InjectionToken<
-  Partial<NgxCurrencyConfig>
->('ngx-currency.config');
+export const RESOLVE_CURRENCY_MASK_CONFIG = new InjectionToken<
+  Partial<ResolveCurrencyMaskConfig>
+>('resolve-currencymask.config');

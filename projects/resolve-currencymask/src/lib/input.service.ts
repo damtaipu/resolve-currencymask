@@ -1,5 +1,8 @@
 import { InputManager } from './input.manager';
-import { NgxCurrencyConfig, NgxCurrencyInputMode } from './ngx-currency.config';
+import {
+  ResolveCurrencyMaskConfig,
+  ResolveCurrencyMaskInputMode,
+} from './resolve-currencymask.config';
 
 export class InputService {
   private readonly _singleDigitRegex = new RegExp(
@@ -37,7 +40,7 @@ export class InputService {
 
   constructor(
     htmlInputElement: HTMLInputElement,
-    private _options: NgxCurrencyConfig,
+    private _options: ResolveCurrencyMaskConfig,
   ) {
     this.inputManager = new InputManager(htmlInputElement);
   }
@@ -47,10 +50,22 @@ export class InputService {
     const keyChar = String.fromCharCode(keyCode);
     const isDecimalChar = keyChar === this._options.decimal;
 
+    if (
+      inputMode === ResolveCurrencyMaskInputMode.Natural &&
+      precision > 0 &&
+      isDecimalChar
+    ) {
+      const decimalIndex = this.rawValue?.indexOf(decimal) ?? -1;
+      if (decimalIndex !== -1) {
+        this.updateFieldValue(decimalIndex + 1);
+        return;
+      }
+    }
+
     if (!this.rawValue) {
       this.rawValue = this.applyMask(false, keyChar);
       let selectionStart: number | undefined = undefined;
-      if (inputMode === NgxCurrencyInputMode.Natural && precision > 0) {
+      if (inputMode === ResolveCurrencyMaskInputMode.Natural && precision > 0) {
         selectionStart = this.rawValue.indexOf(decimal);
         if (isDecimalChar) {
           selectionStart++;
@@ -66,12 +81,13 @@ export class InputService {
         this.rawValue.length,
       );
 
-      // In natural mode, replace decimals instead of shifting them.
+      // In natural mode, replace decimal digits instead of shifting them.
       const inDecimalPortion = rawValueStart.indexOf(decimal) !== -1;
       if (
-        inputMode === NgxCurrencyInputMode.Natural &&
+        inputMode === ResolveCurrencyMaskInputMode.Natural &&
         inDecimalPortion &&
-        selectionStart === selectionEnd
+        selectionStart === selectionEnd &&
+        this._singleDigitRegex.test(rawValueEnd.charAt(0))
       ) {
         rawValueEnd = rawValueEnd.substring(1);
       }
@@ -120,7 +136,7 @@ export class InputService {
     }
 
     if (
-      inputMode === NgxCurrencyInputMode.Natural &&
+      inputMode === ResolveCurrencyMaskInputMode.Natural &&
       !isNumber &&
       !disablePadAndTrim
     ) {
@@ -315,7 +331,10 @@ export class InputService {
         }
 
         // In natural mode, jump backwards when in decimal portion of number.
-        if (inputMode === NgxCurrencyInputMode.Natural && isCursorInDecimals) {
+        if (
+          inputMode === ResolveCurrencyMaskInputMode.Natural &&
+          isCursorInDecimals
+        ) {
           shiftSelection = -1;
           // when removing a single whole number, replace it with 0
           if (
@@ -346,7 +365,7 @@ export class InputService {
 
     // In natural mode, replace decimals with 0s.
     if (
-      inputMode === NgxCurrencyInputMode.Natural &&
+      inputMode === ResolveCurrencyMaskInputMode.Natural &&
       selectionStart > decimalIndex
     ) {
       const replacedDecimalCount = selectionEnd - selectionStart;
@@ -400,7 +419,7 @@ export class InputService {
     );
   }
 
-  updateOptions(options: NgxCurrencyConfig): void {
+  updateOptions(options: ResolveCurrencyMaskConfig): void {
     const value = this.value;
     this._options = options;
     this.value = value;

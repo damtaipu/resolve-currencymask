@@ -1,9 +1,12 @@
 import { InputService } from './input.service';
 import { createMockHtmlInputElement } from './mock';
-import { NgxCurrencyConfig, NgxCurrencyInputMode } from './ngx-currency.config';
+import {
+  ResolveCurrencyMaskConfig,
+  ResolveCurrencyMaskInputMode,
+} from './resolve-currencymask.config';
 
 describe('InputService', () => {
-  let options: NgxCurrencyConfig;
+  let options: ResolveCurrencyMaskConfig;
   let inputService: InputService;
 
   beforeEach(() => {
@@ -160,7 +163,7 @@ describe('InputService', () => {
       const htmlInputElement = createMockHtmlInputElement(10, 10);
       options.prefix = '$$';
       options.suffix = 'SUF';
-      options.inputMode = NgxCurrencyInputMode.Natural;
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
       inputService = new InputService(htmlInputElement, options);
       inputService.rawValue = '$$1.234,56SUF';
 
@@ -200,11 +203,44 @@ describe('InputService', () => {
       expect(htmlInputElement.selectionEnd).toEqual(3);
     });
 
+    it('should move cursor to decimals when decimal separator is typed at the end in natural mode', () => {
+      const htmlInputElement = createMockHtmlInputElement(8, 8);
+      options.prefix = '$$';
+      options.suffix = 'SUF';
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
+      inputService = new InputService(htmlInputElement, options);
+      inputService.rawValue = '$$123,00SUF';
+
+      inputService.addNumber(','.charCodeAt(0));
+
+      expect(inputService.rawValue).toEqual('$$123,00SUF');
+      expect(htmlInputElement.selectionStart).toEqual(6);
+      expect(htmlInputElement.selectionEnd).toEqual(6);
+    });
+
+    it('should allow typing both decimal places after the separator in natural mode', () => {
+      const htmlInputElement = createMockHtmlInputElement(8, 8);
+      options.prefix = '$$';
+      options.suffix = 'SUF';
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
+      inputService = new InputService(htmlInputElement, options);
+      inputService.rawValue = '$$123,00SUF';
+
+      inputService.addNumber(','.charCodeAt(0));
+      inputService.addNumber('4'.charCodeAt(0));
+      inputService.addNumber('5'.charCodeAt(0));
+
+      expect(inputService.rawValue).toEqual('$$123,45SUF');
+      expect(htmlInputElement.selectionStart).toEqual(8);
+      expect(htmlInputElement.selectionEnd).toEqual(8);
+      expect(inputService.value).toEqual(123.45);
+    });
+
     it('should replace decimals with 0s when deleting in natural mode', () => {
       const htmlInputElement = createMockHtmlInputElement(7, 7);
       options.prefix = '$$';
       options.suffix = 'SUF';
-      options.inputMode = NgxCurrencyInputMode.Natural;
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
       inputService = new InputService(htmlInputElement, options);
       inputService.rawValue = '$$1.234,56SUF';
 
@@ -223,7 +259,7 @@ describe('InputService', () => {
       const htmlInputElement = createMockHtmlInputElement(4, 4);
       options.prefix = '$$';
       options.suffix = 'SUF';
-      options.inputMode = NgxCurrencyInputMode.Natural;
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
       inputService = new InputService(htmlInputElement, options);
       inputService.rawValue = '$$1,00SUF';
 
@@ -238,7 +274,7 @@ describe('InputService', () => {
       options.prefix = '$$';
       options.suffix = 'SUF';
       options.precision = 0;
-      options.inputMode = NgxCurrencyInputMode.Natural;
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
       inputService = new InputService(htmlInputElement, options);
       inputService.rawValue = '$$1.234SUF';
 
@@ -265,7 +301,7 @@ describe('InputService', () => {
       const htmlInputElement = createMockHtmlInputElement(5, 9);
       options.prefix = '$$';
       options.suffix = 'SUF';
-      options.inputMode = NgxCurrencyInputMode.Natural;
+      options.inputMode = ResolveCurrencyMaskInputMode.Natural;
       inputService = new InputService(htmlInputElement, options);
       inputService.rawValue = '$$1.234,56SUF';
 
