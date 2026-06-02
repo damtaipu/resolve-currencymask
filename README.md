@@ -5,7 +5,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/nbfontana/resolve-currencymask.png)](https://github.com/nbfontana/resolve-currencymask/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.png)](https://raw.githubusercontent.com/nbfontana/resolve-currencymask/master/LICENSE)
 
-`resolve-currencymask` é um fork do `ng2-currency-mask`/`ngx-currency-mask`. Como melhorias e atualizações sugeridas na lib original não avançaram, este pacote foi atualizado para manter compatibilidade com o Angular 21 e incluir ajustes práticos no comportamento da máscara monetária em campos `<input>`, mantendo o valor do formulário como número.
+`resolve-currencymask` é um fork do `ngx-currency-mask`. Como melhorias e atualizações sugeridas na lib original não avançaram, este pacote foi atualizado para manter compatibilidade com o Angular 21 e incluir ajustes práticos no comportamento da máscara monetária em campos `<input>`, mantendo o valor do formulário como número.
 
 https://damtaipu.github.io/resolve-currencymask/
 
